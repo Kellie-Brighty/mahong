@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahong - Mochi Dad's Dog</title>
+    <link rel="icon" href="mahong.jpg" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+        background: #f7ecd7;
+        color: #4b3c2a;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        background: linear-gradient(
+            120deg,
+            rgba(247, 236, 215, 0.4) 0%,
+            rgba(255, 225, 168, 0.2) 40%,
+            rgba(184, 155, 106, 0.4) 100%
+          ),
+          url("mahong-banner.jpg") repeat top center;
+        background-blend-mode: multiply;
+        animation: gradientMove 8s ease-in-out infinite alternate;
+        opacity: 1;
+      }
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      .floating-bone {
+        position: absolute;
+        width: 60px;
+        opacity: 0.13;
+        animation: floatBone 7s ease-in-out infinite;
+      }
+      .floating-bone.bone1 {
+        top: 10%;
+        left: 8%;
+        animation-delay: 0s;
+      }
+      .floating-bone.bone2 {
+        top: 60%;
+        left: 80%;
+        animation-delay: 2s;
+      }
+      .floating-bone.bone3 {
+        top: 80%;
+        left: 20%;
+        animation-delay: 4s;
+      }
+      .floating-bone.bone4 {
+        top: 30%;
+        left: 60%;
+        animation-delay: 1s;
+      }
+      @keyframes floatBone {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-10deg);
+        }
+        50% {
+          transform: translateY(-30px) rotate(10deg);
+        }
+      }
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 40px 20px 20px 20px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+      .hero-img {
+        width: 220px;
+        height: auto;
+        border-radius: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        margin-bottom: 24px;
+        border: 4px solid #e2cfa5;
+        background: #fffbe9;
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+          box-shadow 0.3s;
+        animation: heroPop 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+      .hero-img:hover {
+        transform: scale(1.07) rotate(-2deg);
+        box-shadow: 0 16px 48px rgba(184, 155, 106, 0.18);
+      }
+      @keyframes heroPop {
+        0% {
+          transform: scale(0.7) rotate(-10deg);
+          opacity: 0;
+        }
+        80% {
+          transform: scale(1.1) rotate(2deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(0);
+          opacity: 1;
+        }
+      }
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        letter-spacing: 2px;
+        color: #b89b6a;
+        text-shadow: 1px 2px 0 #fffbe9, 0 0 8px #ffe1a8;
+        animation: fadeInDown 1.1s 0.2s both;
+      }
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero-desc {
+        font-size: 1.2rem;
+        margin-bottom: 28px;
+        max-width: 500px;
+        text-align: center;
+        color: #6d573a;
+        animation: fadeIn 1.2s 0.4s both;
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .ca-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        animation: fadeIn 1.2s 0.6s both;
+      }
+      .ca-input {
+        font-size: 1rem;
+        padding: 8px 12px;
+        border: 2px solid #e2cfa5;
+        border-radius: 8px 0 0 8px;
+        outline: none;
+        width: 320px;
+        background: #fffbe9;
+        color: #4b3c2a;
+        transition: box-shadow 0.2s;
+      }
+      .ca-input:focus {
+        box-shadow: 0 0 0 2px #f7c873;
+      }
+      .copy-btn {
+        padding: 8px 16px;
+        font-size: 1rem;
+        background: linear-gradient(90deg, #f7c873 0%, #ffe1a8 100%);
+        color: #4b3c2a;
+        border: 2px solid #e2cfa5;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(247, 200, 115, 0.08);
+      }
+      .copy-btn:hover {
+        background: linear-gradient(90deg, #ffe1a8 0%, #f7c873 100%);
+        transform: scale(1.07);
+      }
+      .actions {
+        display: flex;
+        gap: 18px;
+        margin-bottom: 24px;
+        animation: fadeIn 1.2s 0.8s both;
+      }
+      .chart-btn {
+        padding: 10px 28px;
+        font-size: 1.1rem;
+        background: linear-gradient(90deg, #b89b6a 0%, #ffe1a8 100%);
+        color: #fffbe9;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: background 0.2s, color 0.2s, transform 0.2s;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+      .chart-btn::after {
+        content: "";
+        position: absolute;
+        left: -60%;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.18);
+        transform: skewX(-20deg);
+        transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+      .chart-btn:hover::after {
+        left: 120%;
+      }
+      .chart-btn:hover {
+        background: linear-gradient(90deg, #ffe1a8 0%, #b89b6a 100%);
+        color: #4b3c2a;
+        transform: scale(1.05);
+      }
+      .socials {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 1.2s 1s both;
+      }
+      .telegram {
+        width: 38px;
+        height: 38px;
+        display: inline-block;
+        background: linear-gradient(135deg, #229ed9 60%, #b89b6a 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(34, 158, 217, 0.08);
+      }
+      .telegram:hover {
+        background: linear-gradient(135deg, #1b7eb6 60%, #ffe1a8 100%);
+        transform: scale(1.1) rotate(-8deg);
+      }
+      .telegram svg {
+        width: 22px;
+        height: 22px;
+        fill: #fff;
+      }
+      @media (max-width: 900px) {
+        .hero-img {
+          width: 160px;
+        }
+        .hero-title {
+          font-size: 2rem;
+        }
+        .ca-input {
+          width: 200px;
+          font-size: 0.95rem;
+        }
+      }
+      @media (max-width: 600px) {
+        .hero {
+          padding: 18px 4vw 10vw 4vw;
+        }
+        .hero-title {
+          font-size: 1.3rem;
+        }
+        .hero-img {
+          width: 110px;
+        }
+        .ca-input {
+          width: 110px;
+          font-size: 0.8rem;
+        }
+        .chart-btn {
+          font-size: 0.9rem;
+          padding: 8px 12px;
+        }
+        .floating-bone {
+          width: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+    <img src="mahong-banner.jpg" class="floating-bone bone1" alt="bone" />
+    <img src="mahong-banner.jpg" class="floating-bone bone2" alt="bone" />
+    <img src="mahong-banner.jpg" class="floating-bone bone3" alt="bone" />
+    <img src="mahong-banner.jpg" class="floating-bone bone4" alt="bone" />
+    <div class="hero">
+      <img src="mahong.jpg" alt="Mahong the Dog" class="hero-img" />
+      <div class="hero-title">Mahong</div>
+      <div class="hero-desc">
+        Mahong is Lan Lan and Mochi Dad's dog, always by Mochi Dad's side,
+        spending quality time as he works on his art — creating the beloved Lan
+        Lan Cat and Moochi comics.<br />
+        <a
+          href="https://www.instagram.com/p/C_H_QMzg2zU/?igsh=OGIyc3pucXg3ZW5x"
+          target="_blank"
+          style="color: #229ed9; text-decoration: underline"
+          >See on Instagram</a
+        >
+      </div>
+      <div class="ca-section">
+        <input
+          type="text"
+          class="ca-input"
+          id="caInput"
+          value="0x945D1c0A6C2e911AF19687E5390F1EFdc7804486"
+          readonly
+        />
+        <button class="copy-btn" onclick="copyCA()">Copy CA</button>
+      </div>
+      <div class="actions">
+        <a
+          class="chart-btn"
+          href="https://dexscreener.com/ethereum/0x945D1c0A6C2e911AF19687E5390F1EFdc7804486"
+          target="_blank"
+        >
+          📈 View Chart
+        </a>
+      </div>
+      <div class="socials">
+        <a
+          class="telegram"
+          href="https://t.me/mahongoneth"
+          target="_blank"
+          title="Join Telegram"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M22 4.01c-.24-.2-.57-.25-.86-.13L2.7 11.36c-.34.14-.56.48-.54.85.02.37.28.68.64.75l4.7.93 2.02 4.1c.14.28.43.46.75.46h.01c.32 0 .61-.18.75-.46l2.02-4.1 4.7-.93c.36-.07.62-.38.64-.75.02-.37-.2-.71-.54-.85L22.86 4.14c-.29-.12-.62-.07-.86.13z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <script>
+      function copyCA() {
+        const caInput = document.getElementById("caInput");
+        caInput.select();
+        caInput.setSelectionRange(0, 99999); // For mobile
+        document.execCommand("copy");
+        const btn = document.querySelector(".copy-btn");
+        btn.textContent = "Copied!";
+        btn.style.transform = "scale(1.15) rotate(-6deg)";
+        btn.style.background = "#b89b6a";
+        setTimeout(() => {
+          btn.textContent = "Copy CA";
+          btn.style.transform = "";
+          btn.style.background =
+            "linear-gradient(90deg, #f7c873 0%, #ffe1a8 100%)";
+        }, 1200);
+      }
+    </script>
+  </body>
+</html>
